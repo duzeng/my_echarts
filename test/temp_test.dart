@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_echarts/my_echarts.dart';
+import 'package:my_echarts/temp.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('my_echarts');
@@ -16,6 +16,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await MyEcharts.platformVersion, '42');
+    expect(await MyTempEcharts.platformVersion, '42');
   });
 }

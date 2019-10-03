@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-class MyEcharts {
+class MyTempEcharts {
   static const MethodChannel _channel =
       const MethodChannel('my_echarts');
 

@@ -7,29 +7,29 @@ import 'package:flutter/material.dart';
 import 'flutter_native_web.dart';
 
 //Echarts
-class EchartView extends StatelessWidget {
-  EchartView({Key key, this.height, this.data, this.child}) : super(key: key);
-  final Map data;
-  final double height;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      color: Colors.white,
-      child: Echarts(data: data, child: child),
-    );
-  }
-}
+//class EchartView extends StatelessWidget {
+//  EchartView({Key key, this.height, this.data, this.child}) : super(key: key);
+//  final Map data;
+//  final double height;
+//  final Widget child;
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container(
+//      height: height,
+//      color: Colors.white,
+//      child: Echarts(data: data, child: child ),
+//    );
+//  }
+//}
 
 class Echarts extends StatefulWidget {
-  Echarts({this.data, this.child});
+  Echarts({this.data, this.child,this.height});
 
   final Widget child;
 
   final Map data;
-
+  final double height;
   @override
   _EchartsState createState() => _EchartsState();
 }
@@ -40,13 +40,13 @@ class _EchartsState extends State<Echarts> {
   bool finished = false;
 
   Future<String> getFileData(String path) async {
-    return await rootBundle.loadString(path);
+    return await rootBundle.loadString(path, cache: false);
   }
 
   Future onWebCreated(webController) async {
     print("webCreated");
     this.webController = webController;
-    String data = await getFileData("assets/echarts/echart.html");
+    String data = await getFileData( "assets/echarts/index.html");
     this.webController.loadData(data);
     this.webController.onPageFinished.listen((url) {
       print("Finished loading $url");
@@ -67,12 +67,16 @@ class _EchartsState extends State<Echarts> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(overflow: Overflow.clip, children: <Widget>[
-      widget.child ?? const Center(child: const CircularProgressIndicator()),
-      AnimatedOpacity(
-          duration: Duration(milliseconds: 300),
-          opacity: finished ? 1.0 : 0.0,
-          child: FlutterNativeWeb(onWebCreated: onWebCreated))
-    ]);
+    return Container(
+      height: widget.height,
+      color: Colors.white,
+      child: Stack(overflow: Overflow.clip, children: <Widget>[
+        widget.child ?? const Center(child: const CircularProgressIndicator()),
+        AnimatedOpacity(
+            duration: Duration(milliseconds: 300),
+            opacity: finished ? 1.0 : 0.0,
+            child: FlutterNativeWeb(onWebCreated: onWebCreated))
+      ]),
+    );
   }
 }

@@ -22,15 +22,22 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var option = {
-      "xAxis": {
-        "type": "category",
-        "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+      "title": {
+        "text":"Echarts entry example"
       },
-      "yAxis": {"type": "value"},
+      "tooltip": {},
+      "lengend": {
+        "data": ["Sales"]
+      },
+      "xAxis": {
+        "data": ["shirt","cardign","chiffon shirt","pants","heels","socks"]
+      },
+      "yAxis": {},
       "series": [
         {
-          "data": [820, 932, 901, 934, 1290, 1330, 1320],
-          "type": "line"
+          "name":"Sales",
+          "data": [5, 20, 36, 10, 10, 20],
+          "type": "bar"
         }
       ]
     };
@@ -38,14 +45,14 @@ class _MyAppState extends State<MyApp> {
     return new MaterialApp(
       home: new Scaffold(
           appBar: new AppBar(
-            title: const Text('Native WebView as Widget'),
+            title: const Text('Flutter Echarts Plugin Example'),
           ),
           body: new SingleChildScrollView(
             child: new Column(
               children: <Widget>[
-                new Text('Native WebView as Widget\n\n'),
+                //Expanded(child: Echarts( data: option),)
                 new Container(
-                  child: EchartView(height: 300, data: option),
+                  child: Echarts(height: 300, data: option),
                   height: 300.0,
                   width: 500.0,
                 ),
