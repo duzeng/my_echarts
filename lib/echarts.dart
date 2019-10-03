@@ -46,7 +46,7 @@ class _EchartsState extends State<Echarts> {
   Future onWebCreated(webController) async {
     print("webCreated");
     this.webController = webController;
-    String data = await getFileData("assets/echart.html");
+    String data = await getFileData("assets/echarts/echart.html");
     this.webController.loadData(data);
     this.webController.onPageFinished.listen((url) {
       print("Finished loading $url");
