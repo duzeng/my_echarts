@@ -6,36 +6,19 @@ import 'package:flutter/services.dart';
 import 'echarts_web_controller.dart';
 import 'platform_native_web.dart';
 
-//Echarts
-//class EchartView extends StatelessWidget {
-//  EchartView({Key key, this.height, this.data, this.child}) : super(key: key);
-//  final Map data;
-//  final double height;
-//  final Widget child;
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return Container(
-//      height: height,
-//      color: Colors.white,
-//      child: Echarts(data: data, child: child ),
-//    );
-//  }
-//}
-
-class Echarts extends StatefulWidget {
-  Echarts({this.data, this.child, this.height});
+class ECharts extends StatefulWidget {
+  ECharts(this.webController,{this.data, this.child, this.height});
 
   final Widget child;
 
   final Map data;
   final double height;
-
+  final EChartsWebController webController;
   @override
-  _EchartsState createState() => _EchartsState();
+  _EChartsState createState() => _EChartsState();
 }
 
-class _EchartsState extends State<Echarts> {
+class _EChartsState extends State<ECharts> {
   EChartsWebController webController;
 
   bool finished = false;
@@ -44,9 +27,10 @@ class _EchartsState extends State<Echarts> {
     return await rootBundle.loadString(path, cache: false);
   }
 
-  Future onWebCreated(webController) async {
+  Future onWebCreated(int id) async {
     print("webCreated");
-    this.webController = webController;
+    this.webController=widget.webController;
+    this.webController.init(id);
     String data = await getFileData("assets/echarts/index.html");
     this.webController.loadData(data);
     this.webController.onPageFinished.listen((url) {

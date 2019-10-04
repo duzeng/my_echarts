@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_echarts/temp.dart';
+import 'package:my_echarts/temp/temp.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('my_echarts');

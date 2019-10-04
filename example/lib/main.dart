@@ -1,14 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
-import 'package:my_echarts/echarts.dart';
+import 'package:my_echarts/my_echarts.dart';
 
 void main() {
   //debugPaintSizeEnabled = true;
   runApp(ExampleApp());
 }
+
+final Map<String, dynamic> lineOption = {
+  "title": {"text": "Echarts line example"},
+  "xAxis": {
+    "type": 'category',
+    "data": ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  "yAxis": {"type": 'value'},
+  "series": [
+    {
+      "data": [820, 932, 901, 934, 1290, 1330, 1320],
+      "type": 'line',
+      "smooth": true
+    }
+  ]
+};
+
+final Map<String, dynamic> barOption = {
+  "title": {"text": "Echarts entry example"},
+  "tooltip": {},
+  "lengend": {
+    "data": ["Sales"]
+  },
+  "xAxis": {
+    "data": ["shirt", "cardign", "chiffon shirt", "pants", "heels", "socks"]
+  },
+  "yAxis": {},
+  "series": [
+    {
+      "name": "Sales",
+      "data": [5, 20, 36, 10, 10, 20],
+      "type": "bar"
+    }
+  ]
+};
 
 class ExampleApp extends StatefulWidget {
   @override
@@ -17,26 +48,15 @@ class ExampleApp extends StatefulWidget {
 
 class _ExampleAppState extends State<ExampleApp> {
   Map<String, dynamic> _option = {};
+  EChartsWebController webController;
 
   @override
   void initState() {
     super.initState();
-    var option = {
-      "xAxis": {
-        "type": 'category',
-        "data": ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-      },
-      "yAxis": {"type": 'value'},
-      "series": [
-        {
-          "data": [820, 932, 901, 934, 1290, 1330, 1320],
-          "type": 'line',
-          "smooth": true
-        }
-      ]
-    };
+    webController = EChartsWebController();
+
     setState(() {
-      _option = option;
+      _option = barOption;
     });
   }
 
@@ -50,7 +70,7 @@ class _ExampleAppState extends State<ExampleApp> {
           body: Column(
             children: <Widget>[
               Expanded(
-                child: Echarts(data: _option),
+                child: ECharts(webController, data: _option),
               ),
               Row(
                 children: <Widget>[
@@ -73,27 +93,11 @@ class _ExampleAppState extends State<ExampleApp> {
   }
 
   _update() {
-    var option = {
-      "title": {"text": "Echarts entry example"},
-      "tooltip": {},
-      "lengend": {
-        "data": ["Sales"]
-      },
-      "xAxis": {
-        "data": ["shirt", "cardign", "chiffon shirt", "pants", "heels", "socks"]
-      },
-      "yAxis": {},
-      "series": [
-        {
-          "name": "Sales",
-          "data": [5, 20, 36, 10, 10, 20],
-          "type": "bar"
-        }
-      ]
-    };
-
-    setState(() {
-      _option = option;
-    });
+    if (_option == lineOption) {
+      _option = barOption;
+    } else if (_option == barOption) {
+      _option = lineOption;
+    }
+    this.webController.evalJsOfMap(_option);
   }
 }

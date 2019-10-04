@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'echarts_web_controller.dart';
 
-typedef void WebViewCreatedCallback(EChartsWebController controller);
+typedef void WebViewCreatedCallback(int id);
 
 class PlatformNativeWeb extends StatefulWidget {
 
@@ -48,7 +46,7 @@ class _PlatformNativeWebState extends State<PlatformNativeWeb> {
     if (widget.onWebCreated == null) {
       return;
     }
-    widget.onWebCreated(new EChartsWebController.init(id));
+    widget.onWebCreated(id);
   }
 }
 
