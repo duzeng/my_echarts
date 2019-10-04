@@ -53,7 +53,7 @@ class _ExampleAppState extends State<ExampleApp> {
   @override
   void initState() {
     super.initState();
-    webController = EChartsWebController();
+    webController = EChartsWebController(htmlLocation: "assets/echarts/index.html");
 
     setState(() {
       _option = barOption;

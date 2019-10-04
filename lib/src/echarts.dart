@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'echarts_web_controller.dart';
 import 'platform_native_web.dart';
 
@@ -23,15 +24,11 @@ class _EChartsState extends State<ECharts> {
 
   bool finished = false;
 
-  Future<String> getFileData(String path) async {
-    return await rootBundle.loadString(path, cache: false);
-  }
-
   Future onWebCreated(int id) async {
     print("webCreated");
     this.webController=widget.webController;
     this.webController.init(id);
-    String data = await getFileData("assets/echarts/index.html");
+    var data = await rootBundle.loadString(this.webController.htmlLocation ?? "assets/echarts/index.html",cache: false);
     this.webController.loadData(data);
     this.webController.onPageFinished.listen((url) {
       print("Finished loading $url");

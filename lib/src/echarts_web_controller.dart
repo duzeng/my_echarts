@@ -7,9 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class EChartsWebController {
-  EChartsWebController();
+  final String htmlLocation;
 
-  EChartsWebController.init(int id) {
+  EChartsWebController({this.htmlLocation});
+
+  EChartsWebController.init(int id,{this.htmlLocation}) {
     _channel = new MethodChannel('my_echarts_$id');
     _pageFinsihed = EventChannel('my_echarts_stream_pagefinish_$id');
     //_pageStarted = EventChannel('flutter_echart_stream_pagestart_$id');
