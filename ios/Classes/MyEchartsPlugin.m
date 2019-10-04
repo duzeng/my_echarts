@@ -1,20 +1,11 @@
 #import "MyEchartsPlugin.h"
 
 @implementation MyEchartsPlugin
-+ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"my_echarts"
-            binaryMessenger:[registrar messenger]];
-  MyEchartsPlugin* instance = [[MyEchartsPlugin alloc] init];
-  [registrar addMethodCallDelegate:instance channel:channel];
-}
 
-- (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-  if ([@"getPlatformVersion" isEqualToString:call.method]) {
-    result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
-  } else {
-    result(FlutterMethodNotImplemented);
-  }
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
+  FlutterNativeWebFactory* webviewFactory =
+      [[FlutterNativeWebFactory alloc] initWithMessenger:registrar.messenger];
+  [registrar registerViewFactory:webviewFactory withId:@"my_echarts"];
 }
 
 @end
