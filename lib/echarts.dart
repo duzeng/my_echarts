@@ -1,10 +1,10 @@
 import 'dart:async';
-
-import 'package:flutter/services.dart';
-
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'flutter_native_web.dart';
+import 'package:flutter/services.dart';
+import 'echarts_web_controller.dart';
+import 'platform_native_web.dart';
 
 //Echarts
 //class EchartView extends StatelessWidget {
@@ -24,18 +24,19 @@ import 'flutter_native_web.dart';
 //}
 
 class Echarts extends StatefulWidget {
-  Echarts({this.data, this.child,this.height});
+  Echarts({this.data, this.child, this.height});
 
   final Widget child;
 
   final Map data;
   final double height;
+
   @override
   _EchartsState createState() => _EchartsState();
 }
 
 class _EchartsState extends State<Echarts> {
-  WebController webController;
+  EChartsWebController webController;
 
   bool finished = false;
 
@@ -46,7 +47,7 @@ class _EchartsState extends State<Echarts> {
   Future onWebCreated(webController) async {
     print("webCreated");
     this.webController = webController;
-    String data = await getFileData( "assets/echarts/index.html");
+    String data = await getFileData("assets/echarts/index.html");
     this.webController.loadData(data);
     this.webController.onPageFinished.listen((url) {
       print("Finished loading $url");
@@ -75,7 +76,7 @@ class _EchartsState extends State<Echarts> {
         AnimatedOpacity(
             duration: Duration(milliseconds: 300),
             opacity: finished ? 1.0 : 0.0,
-            child: FlutterNativeWeb(onWebCreated: onWebCreated))
+            child: PlatformNativeWeb(onWebCreated: onWebCreated))
       ]),
     );
   }

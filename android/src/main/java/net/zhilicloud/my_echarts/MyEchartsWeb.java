@@ -39,10 +39,10 @@ public class MyEchartsWeb implements PlatformView, MethodCallHandler {
         webView = getWebView(registrar);
 
         channel = new MethodChannel(registrar.messenger(), "my_echarts_" + id);
-        final EventChannel onPageFinishEvenetChannel = new EventChannel(registrar.messenger(), "my_echarts_stream_pagefinish_" + id);
-        final EventChannel onPageStartEvenetChannel = new EventChannel(registrar.messenger(), "my_echarts_stream_pagestart_" + id);
+        final EventChannel onPageFinishEventChannel = new EventChannel(registrar.messenger(), "my_echarts_stream_pagefinish_" + id);
+        final EventChannel onPageStartEventChannel = new EventChannel(registrar.messenger(), "my_echarts_stream_pagestart_" + id);
 
-        onPageFinishEvenetChannel.setStreamHandler(new EventChannel.StreamHandler() {
+        onPageFinishEventChannel.setStreamHandler(new EventChannel.StreamHandler() {
             @Override
             public void onListen(Object o, EventChannel.EventSink eventSink) {
                 onPageFinishEvent = eventSink;
@@ -53,7 +53,7 @@ public class MyEchartsWeb implements PlatformView, MethodCallHandler {
 
             }
         });
-        onPageStartEvenetChannel.setStreamHandler(new EventChannel.StreamHandler() {
+        onPageStartEventChannel.setStreamHandler(new EventChannel.StreamHandler() {
             @Override
             public void onListen(Object o, EventChannel.EventSink eventSink) {
                 onPageStartEvent = eventSink;
