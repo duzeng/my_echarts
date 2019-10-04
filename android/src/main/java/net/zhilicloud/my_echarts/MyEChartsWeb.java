@@ -21,7 +21,7 @@ import io.flutter.plugin.platform.PlatformView;
 
 import static io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 
-public class MyEchartsWeb implements PlatformView, MethodCallHandler {
+public class MyEChartsWeb implements PlatformView, MethodCallHandler {
 
     Context context;
     Registrar registrar;
@@ -32,7 +32,7 @@ public class MyEchartsWeb implements PlatformView, MethodCallHandler {
     EventChannel.EventSink onPageStartEvent;
 
     @SuppressLint("SetJavaScriptEnabled")
-    MyEchartsWeb(Context context, Registrar registrar, int id) {
+    MyEChartsWeb(Context context, Registrar registrar, int id) {
         this.context = context;
         this.registrar = registrar;
         this.url = url;
@@ -69,19 +69,16 @@ public class MyEchartsWeb implements PlatformView, MethodCallHandler {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
-    public void onMethodCall(MethodCall call,final MethodChannel.Result result) {
+    public void onMethodCall(MethodCall call, final MethodChannel.Result result) {
         switch (call.method) {
             case "loadUrl":
-                String url = call.arguments.toString();
-                webView.loadUrl(url);
+                webView.loadUrl(call.arguments.toString());
                 break;
             case "loadData":
-                String html = call.arguments.toString();
-                webView.loadData(html, "text/html", "utf-8");
+                webView.loadData(call.arguments.toString(), "text/html", "utf-8");
                 break;
             case "evalJs":
-                String code ="init(" +call.arguments.toString()+")";
-                webView.evaluateJavascript(code, new ValueCallback<String>() {
+                webView.evaluateJavascript(call.arguments.toString(), new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
                         result.success(value);
@@ -108,7 +105,7 @@ public class MyEchartsWeb implements PlatformView, MethodCallHandler {
         WebView webView = new WebView(registrar.context());
         webView.setWebViewClient(new CustomWebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setBackgroundColor(Color.rgb(255,255,255));
+        webView.setBackgroundColor(Color.rgb(255, 255, 255));
         return webView;
     }
 
@@ -128,7 +125,7 @@ public class MyEchartsWeb implements PlatformView, MethodCallHandler {
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            if(onPageStartEvent != null) {
+            if (onPageStartEvent != null) {
                 onPageStartEvent.success(url);
             }
             super.onPageStarted(view, url, favicon);
@@ -136,7 +133,7 @@ public class MyEchartsWeb implements PlatformView, MethodCallHandler {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            if(onPageFinishEvent != null) {
+            if (onPageFinishEvent != null) {
                 onPageFinishEvent.success(url);
             }
             super.onPageFinished(view, url);

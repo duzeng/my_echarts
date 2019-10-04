@@ -8,17 +8,17 @@ import io.flutter.plugin.platform.PlatformViewFactory;
 
 import static io.flutter.plugin.common.PluginRegistry.Registrar;
 
-public class MyEchartsViewFactory extends PlatformViewFactory {
+public class MyEChartsViewFactory extends PlatformViewFactory {
 
     private final Registrar mPluginRegistrar;
 
-    public MyEchartsViewFactory(Registrar registrar) {
+    public MyEChartsViewFactory(Registrar registrar) {
         super(StandardMessageCodec.INSTANCE);
         mPluginRegistrar = registrar;
     }
 
     @Override
     public PlatformView create(Context context, int i, Object o) {
-        return new MyEchartsWeb(context,mPluginRegistrar,i);
+        return new MyEChartsWeb(context,mPluginRegistrar,i);
     }
 }

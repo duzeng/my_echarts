@@ -98,6 +98,6 @@ class _ExampleAppState extends State<ExampleApp> {
     } else if (_option == barOption) {
       _option = lineOption;
     }
-    this.webController.evalJsOfMap(_option);
+    this.webController.initECharts(_option);
   }
 }

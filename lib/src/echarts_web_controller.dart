@@ -14,7 +14,6 @@ class EChartsWebController {
   EChartsWebController.init(int id,{this.htmlLocation}) {
     _channel = new MethodChannel('my_echarts_$id');
     _pageFinsihed = EventChannel('my_echarts_stream_pagefinish_$id');
-    //_pageStarted = EventChannel('flutter_echart_stream_pagestart_$id');
   }
 
   init(int id) {
@@ -41,10 +40,10 @@ class EChartsWebController {
     return _channel.invokeMethod('evalJs', code);
   }
 
-  Future<void> evalJsOfMap(Map code) async {
+  Future<void> initECharts(Map code) async {
     assert(code != null);
-    var data = json.encode(code).toString();
-    return _channel.invokeMethod('evalJs', data);
+    var data = 'init(${json.encode(code).toString()})';
+    return evalJs(data);
   }
 
   Stream<String> get onPageFinished {

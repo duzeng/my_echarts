@@ -8,13 +8,14 @@ import 'echarts_web_controller.dart';
 import 'platform_native_web.dart';
 
 class ECharts extends StatefulWidget {
-  ECharts(this.webController,{this.data, this.child, this.height});
+  ECharts(this.webController, {this.data, this.child, this.height});
 
   final Widget child;
 
   final Map data;
   final double height;
   final EChartsWebController webController;
+
   @override
   _EChartsState createState() => _EChartsState();
 }
@@ -26,18 +27,20 @@ class _EChartsState extends State<ECharts> {
 
   Future onWebCreated(int id) async {
     print("webCreated");
-    this.webController=widget.webController;
+    this.webController = widget.webController;
     this.webController.init(id);
-    var data = await rootBundle.loadString(this.webController.htmlLocation ?? "assets/echarts/index.html",cache: false);
-    this.webController.loadData(data);
+
     this.webController.onPageFinished.listen((url) {
       print("Finished loading $url");
-      var data = json.encode(widget.data).toString();
-      this.webController.evalJs(data);
+      this.webController.initECharts(widget.data); //.evalJs(data);
       setState(() {
         finished = true;
       });
     });
+    var data = await rootBundle.loadString(
+        this.webController.htmlLocation ?? "assets/echarts/index.html",
+        cache: false);
+    this.webController.loadData(data);
   }
 
   @override
