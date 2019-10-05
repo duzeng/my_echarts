@@ -101,6 +101,16 @@ public class MyEChartsWeb implements PlatformView, MethodCallHandler {
 
     }
 
+    @Override
+    public void onInputConnectionLocked() {
+
+    }
+
+    @Override
+    public void onInputConnectionUnlocked() {
+
+    }
+
     private WebView getWebView(Registrar registrar) {
         WebView webView = new WebView(registrar.context());
         webView.setWebViewClient(new CustomWebViewClient());
